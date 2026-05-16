@@ -35,11 +35,19 @@ add_library(crc
 )
 target_include_directories(crc PUBLIC src/crc)
 
+# ------- Session Layer -------
+add_library(session
+    src/session/SessionLayer.cpp
+)
+target_include_directories(session PUBLIC src/session)
+target_link_libraries(session PUBLIC framing crc)
+
 # ------- Tests -------
 add_executable(proto_tests
     tests/PhysicalLayerTest.cpp
     tests/FramingLayerTest.cpp
     tests/CrcLayerTest.cpp
+    tests/SessionLayerTest.cpp
 )
-target_link_libraries(proto_tests PRIVATE physical framing crc GTest::gtest_main)
+target_link_libraries(proto_tests PRIVATE physical framing crc session GTest::gtest_main)
 gtest_discover_tests(proto_tests)
