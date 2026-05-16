@@ -29,10 +29,17 @@ add_library(framing
 target_include_directories(framing PUBLIC src/framing)
 target_link_libraries(framing PUBLIC physical)
 
+# ------- CRC Layer -------
+add_library(crc
+    src/crc/CrcLayer.cpp
+)
+target_include_directories(crc PUBLIC src/crc)
+
 # ------- Tests -------
 add_executable(proto_tests
     tests/PhysicalLayerTest.cpp
     tests/FramingLayerTest.cpp
+    tests/CrcLayerTest.cpp
 )
-target_link_libraries(proto_tests PRIVATE physical framing GTest::gtest_main)
+target_link_libraries(proto_tests PRIVATE physical framing crc GTest::gtest_main)
 gtest_discover_tests(proto_tests)
