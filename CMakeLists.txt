@@ -22,9 +22,17 @@ add_library(physical
 )
 target_include_directories(physical PUBLIC src/physical)
 
+# ------- Framing Layer -------
+add_library(framing
+    src/framing/FramingLayer.cpp
+)
+target_include_directories(framing PUBLIC src/framing)
+target_link_libraries(framing PUBLIC physical)
+
 # ------- Tests -------
 add_executable(proto_tests
     tests/PhysicalLayerTest.cpp
+    tests/FramingLayerTest.cpp
 )
-target_link_libraries(proto_tests PRIVATE physical GTest::gtest_main)
+target_link_libraries(proto_tests PRIVATE physical framing GTest::gtest_main)
 gtest_discover_tests(proto_tests)
