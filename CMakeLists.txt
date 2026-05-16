@@ -42,12 +42,23 @@ add_library(session
 target_include_directories(session PUBLIC src/session)
 target_link_libraries(session PUBLIC framing crc)
 
+# ------- Application Layer -------
+add_library(application
+    src/application/ApplicationLayer.cpp
+)
+target_include_directories(application PUBLIC src/application)
+target_link_libraries(application PUBLIC session)
+
 # ------- Tests -------
 add_executable(proto_tests
     tests/PhysicalLayerTest.cpp
     tests/FramingLayerTest.cpp
     tests/CrcLayerTest.cpp
     tests/SessionLayerTest.cpp
+    tests/ApplicationLayerTest.cpp
 )
-target_link_libraries(proto_tests PRIVATE physical framing crc session GTest::gtest_main)
+target_link_libraries(proto_tests PRIVATE
+    physical framing crc session application
+    GTest::gtest_main
+)
 gtest_discover_tests(proto_tests)
