@@ -56,6 +56,7 @@ add_executable(proto_tests
     tests/CrcLayerTest.cpp
     tests/SessionLayerTest.cpp
     tests/ApplicationLayerTest.cpp
+    tests/IntegrationTest.cpp
 )
 target_link_libraries(proto_tests PRIVATE
     physical framing crc session application
